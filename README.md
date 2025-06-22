@@ -47,12 +47,21 @@ Provides the following MCP tools:
     | stops          | int      | Number of stops to filter (0 for non-stop)                     | None    |
     | limit          | int      | Maximum number of flights to return per date pair             | 10      |
 
-## Setup
+## Installation
+
+### Quick Install with uvx (Recommended)
+
+```bash
+# Install and run directly from GitHub
+uvx --from git+https://github.com/RukumaLabs/google-flights-mcp google-flights-mcp
+```
+
+### Manual Installation
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/msr2903/google-flights-mcp.git
-    cd Google-Flights-MCP-Server
+    git clone https://github.com/RukumaLabs/google-flights-mcp.git
+    cd google-flights-mcp
     ```
 2.  **Create a virtual environment and install dependencies:**
     ```bash
@@ -67,8 +76,12 @@ Provides the following MCP tools:
 
 ## Running the Server
 
-You can test the server with MCP Inspector by running:
+### With uvx (if installed via uvx)
+```bash
+uvx --from git+https://github.com/RukumaLabs/google-flights-mcp google-flights-mcp
+```
 
+### With uv (if installed manually)
 ```bash
 uv run server.py
 ```
@@ -79,6 +92,27 @@ The server uses STDIO transport by default.
 
 Add the server to your MCP client's configuration file. Example for `cline_mcp_settings.json` or `claude_desktop_config.json`:
 
+### Using uvx (Recommended)
+```json
+{
+  "mcpServers": {
+    "google-flights": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/RukumaLabs/google-flights-mcp",
+        "google-flights-mcp"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    }
+    // ... other servers
+  }
+}
+```
+
+### Using local installation
 -macOS
 ```json
 {
@@ -119,7 +153,7 @@ Add the server to your MCP client's configuration file. Example for `cline_mcp_s
   }
 }
 ```
- - **Note**: You may need to put the full path to the uv executable in the command field. You can get this by running `which uv` on MacOS/Linux or `where uv` on Windows.
+ - **Note**: You may need to put the full path to the uv/uvx executable in the command field. You can get this by running `which uvx` on macOS/Linux or `where uvx` on Windows.
 
 
 ## Notes

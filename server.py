@@ -7,13 +7,19 @@ import sys
 import os
 from typing import Any, Optional, Dict
 
-# --- fast_flights should now be in the same directory ---
+# --- Import fast_flights ---
 try:
+    # Try relative import first (for when running as installed package)
     from fast_flights import FlightData, Passengers, get_flights
-except ImportError as e:
-    print(f"Error importing fast_flights: {e}", file=sys.stderr)
-    print(f"Ensure the 'fast_flights' directory is present alongside server.py.", file=sys.stderr)
-    sys.exit(1)
+except ImportError:
+    try:
+        # Try adding current directory to path (for development)
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from fast_flights import FlightData, Passengers, get_flights
+    except ImportError as e:
+        print(f"Error importing fast_flights: {e}", file=sys.stderr)
+        print(f"Ensure the 'fast_flights' directory is present.", file=sys.stderr)
+        sys.exit(1)
 
 from mcp.server.fastmcp import FastMCP
 
@@ -356,6 +362,9 @@ async def find_all_flights_in_range( # Renamed function
         })
 
 # --- Run the server ---
-if __name__ == "__main__":
-    # Run the server using stdio transport
+def run():
+    """Entry point for the MCP server."""
     mcp.run(transport='stdio')
+
+if __name__ == "__main__":
+    run()

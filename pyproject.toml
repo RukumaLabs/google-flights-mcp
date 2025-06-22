@@ -14,5 +14,9 @@ dependencies = [
     "playwright"
 ]
 
+[project.scripts]
+google-flights-mcp = "server:run"
+
 [tool.setuptools]
 py-modules = ["server"]
+packages = ["fast_flights"]
